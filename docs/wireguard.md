@@ -4,7 +4,7 @@ This document describes the WireGuard VPN setup between the proxy server and the
 
 ## Overview
 
-WireGuard provides a secure, encrypted tunnel between the proxy server and the client server, ensuring that all email traffic between them is protected.
+WireGuard provides a secure, encrypted tunnel between the proxy server and the client server, ensuring that all email traffic between them is protected. The client server only needs UDP port 51820 open to establish this connection, making it virtually invisible on the public internet.
 
 ## Installation
 
@@ -77,6 +77,24 @@ wg setconf wg0 /etc/wireguard/wg0.conf
 # Bring up the interface
 ip link set up dev wg0
 ```
+
+## Firewall Considerations
+
+### Proxy Server
+The proxy server needs to allow incoming and outgoing traffic on UDP port 51820 for WireGuard:
+
+```bash
+sudo ufw allow 51820/udp
+```
+
+### Client Server
+The client server only needs UDP port 51820 open for WireGuard. No other ports need to be exposed to the internet:
+
+```bash
+sudo ufw allow 51820/udp
+```
+
+With this minimal configuration, the client server remains invisible on the public network while still maintaining secure communication with the proxy server through the WireGuard tunnel.
 
 ## Testing the Connection
 

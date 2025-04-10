@@ -49,6 +49,18 @@ Each document contains detailed instructions for its specific component and will
 - Preservation of original sender IP and headers
 - Minimal attack surface with controlled port exposure
 
+## Testing Environment
+
+This architecture has been tested using Debian 12 as the operating system for both client and server components. The proxy server was deployed on a [IONOS VPS](https://www.ionos.com/servers/vps), chosen for the following reasons:
+
+- IONOS provides minimal VPS solutions starting at €1/month with 1GB of RAM
+- IONOS VPS instances come with a static public IP address with excellent reputation
+- The static IP significantly improves email deliverability and reduces the risk of emails being marked as spam
+
+While this setup relies on IONOS as an intermediary for the proxy server, it offers advantages over dedicated SMTP relay services (such as [MailChannels](https://www.mailchannels.com/)). Although services like MailChannels claim to respect privacy by not logging email content and purging metadata logs after 30 days, they still collect metadata about senders and recipients, and potentially have access to email content.
+
+By self-hosting the SMTP relay through a VPS, we maintain greater control over our email infrastructure. In the future, any hosting provider that offers static IP addresses with good reputation could be used, making it possible to move to a completely independent server setup while maintaining good email deliverability.
+
 ## License
 
 This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.

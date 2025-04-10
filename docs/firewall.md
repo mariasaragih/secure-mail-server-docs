@@ -4,13 +4,45 @@ This document describes the firewall configuration required for the secure email
 
 ## Overview
 
-A properly configured firewall is essential for securing your email server. This guide uses Uncomplicated Firewall (UFW) on the proxy server to:
+A properly configured firewall is essential for securing your email server. This guide covers firewall configuration for both the proxy server and client server:
 
-1. Control which ports are accessible from the internet
-2. Configure port forwarding for specific mail-related services
-3. Establish secure rules for WireGuard VPN communication
+1. **Proxy Server Firewall**: Controls which ports are accessible from the internet and configures port forwarding for specific mail-related services
+2. **Client Server Firewall**: Minimal configuration that only allows WireGuard VPN communication
 
-## UFW Installation
+## IONOS VPS Firewall Configuration
+
+If you're using IONOS as your VPS provider for the proxy server (as recommended in the testing environment), you'll need to configure their provider-level firewall in addition to the system firewall (UFW).
+
+### Opening Required Ports in IONOS Control Panel
+
+IONOS provides a web-based firewall configuration interface that you must use to open ports before they can be accessed, even if they are allowed in your system firewall.
+
+1. Login to your IONOS control panel
+2. Navigate to the "Server & Cloud" section
+3. Select your VPS
+4. Go to "Network" → "Firewall Rules"
+5. Create rules to open the following ports:
+   - 22/TCP (SSH)
+   - 80/TCP (HTTP)
+   - 443/TCP (HTTPS)
+   - 51820/UDP (WireGuard)
+   - 587/TCP (SMTP Submission)
+   - 993/TCP (IMAPS)
+
+### Special Case: Port 25 (SMTP)
+
+IONOS blocks port 25 by default as an anti-spam measure, and this port cannot be opened directly through the control panel. To open port 25:
+
+1. Contact IONOS customer support by phone (available 24/7)
+2. Request to open port 25 for your VPS
+3. Explain that you're setting up a mail server
+4. They will typically open the port without issues after verifying your account
+
+This extra step helps prevent the VPS from being used for spam but may cause a slight delay in your setup process.
+
+## Proxy Server Firewall Configuration
+
+### UFW Installation
 
 UFW is usually pre-installed on most Ubuntu/Debian systems. If not, install it:
 
@@ -19,7 +51,7 @@ sudo apt update
 sudo apt install ufw
 ```
 
-## Enable IP Forwarding
+### Enable IP Forwarding
 
 Before configuring the firewall, you must enable IP forwarding at the system level to allow the server to forward packets between interfaces:
 
@@ -42,9 +74,9 @@ sysctl net.ipv4.ip_forward
 
 It should return `net.ipv4.ip_forward = 1`.
 
-## Basic UFW Configuration
+### Basic UFW Configuration
 
-### Configuring Default Policies
+#### Configuring Default Policies
 
 Start with a secure default policy:
 
@@ -54,7 +86,7 @@ sudo ufw default deny incoming
 sudo ufw default allow outgoing
 ```
 
-### Configure UFW to Accept Forwarded Packets
+#### Configure UFW to Accept Forwarded Packets
 
 UFW by default blocks forwarded packets, which would prevent our port forwarding from working. Enable packet forwarding in UFW by editing its configuration:
 
@@ -70,7 +102,7 @@ DEFAULT_FORWARD_POLICY="ACCEPT"
 
 Save and close the file.
 
-### Opening Required Ports
+#### Opening Required Ports
 
 Configure UFW to allow the necessary services:
 
@@ -91,7 +123,7 @@ sudo ufw allow 587/tcp # Submission
 sudo ufw allow 993/tcp # IMAPS
 ```
 
-### Restricting Access to Specific IPs
+#### Restricting Access to Specific IPs
 
 For enhanced security, certain services can be restricted to specific IP addresses. For example, allowing SMTP relay only from the Mailcow server via WireGuard:
 
@@ -100,9 +132,9 @@ For enhanced security, certain services can be restricted to specific IP address
 sudo ufw allow from 10.0.0.2 to any port 2526/tcp
 ```
 
-## Port Forwarding Configuration
+### Port Forwarding Configuration
 
-### Configuring NAT Rules in UFW
+#### Configuring NAT Rules in UFW
 
 UFW uses iptables under the hood. To configure port forwarding, you need to edit the `/etc/ufw/before.rules` file, which contains rules that are processed before the UFW rules.
 
@@ -135,7 +167,7 @@ Additionally, add the following forwarding rules to the `ufw-before-forward` cha
 -A ufw-before-forward -p tcp -d 10.0.0.2 --dport 587 -j ACCEPT
 ```
 
-### Explanation of Port Forwarding
+#### Explanation of Port Forwarding
 
 The port forwarding configuration is critical for the email server architecture:
 
@@ -155,7 +187,7 @@ The port forwarding configuration is critical for the email server architecture:
    - `POSTROUTING` rules with MASQUERADE handle the return traffic
    - Additional `ufw-before-forward` rules explicitly allow the forwarded connections
 
-## Enabling and Verifying the Firewall
+### Enabling and Verifying the Firewall
 
 After configuring UFW, enable it and verify the configuration:
 
@@ -172,15 +204,47 @@ sudo ufw status verbose
 
 Expected output should show all configured rules with appropriate ports and services.
 
+## Client Server Firewall Configuration
+
+The client server requires a much simpler firewall configuration since it does not interact directly with the internet. It only needs to allow the WireGuard VPN connection.
+
+### Basic UFW Configuration for Client Server
+
+```bash
+# Install UFW if not already installed
+sudo apt update
+sudo apt install ufw
+
+# Set default policies (deny incoming, allow outgoing)
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Allow WireGuard VPN traffic
+sudo ufw allow 51820/udp
+
+# Enable UFW
+sudo ufw enable
+```
+
+That's it! The client server is now configured to:
+1. Deny all incoming connections by default
+2. Allow only WireGuard VPN traffic on UDP port 51820
+3. Allow all outgoing connections
+
+This minimal configuration ensures that the client server is completely invisible on the public internet, with the only access point being through the secure WireGuard tunnel from the proxy server.
+
 ## Security Considerations
 
-1. **Minimal Port Exposure**
+1. **Proxy Server Security**
    - Only essential ports are opened to the internet
    - Legacy and insecure protocols are kept closed
    - Administrative access is restricted to SSH only
-
-2. **Secure Forwarding**
    - All forwarded connections go through the encrypted WireGuard tunnel
+
+2. **Client Server Security**
+   - Completely isolated from the internet
+   - Only the WireGuard VPN port is open
+   - All email services are only accessible through the encrypted tunnel
    - Authentication happens on the internal Mailcow server, not the exposed proxy
 
 ## Next Steps
