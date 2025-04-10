@@ -22,25 +22,15 @@ The system is composed of two main components:
 
 Follow these steps in order to set up your secure email server:
 
-1. **[Network Configuration](docs/network.md)** - Start here to understand the network architecture and requirements
-2. **[Firewall Configuration](docs/firewall.md)** - Configure the firewall on the proxy server
-3. **[WireGuard VPN Setup](docs/wireguard.md)** - Configure the secure tunnel between servers
-4. **[Mailcow Configuration](docs/mailcow.md)** - Set up the internal mail server first
-5. **[DNS Configuration](docs/dns.md)** - Set up proper DNS records for email delivery
-6. **[Haraka Mail Server Setup](docs/haraka.md)** - Configure the proxy mail server
-7. **[Caddy Web Server Setup](docs/caddy.md)** - Configure the reverse proxy for web access
+1. **[Network Configuration](docs/network.md)** - Network architecture overview and requirements
+2. **[Firewall Configuration](docs/firewall.md)** - UFW setup and port forwarding
+3. **[WireGuard VPN Setup](docs/wireguard.md)** - Secure tunnel configuration between servers
+4. **[Mailcow Configuration](docs/mailcow.md)** - Internal mail server setup
+5. **[DNS Configuration](docs/dns.md)** - Email delivery DNS setup
+6. **[Haraka Mail Server Setup](docs/haraka.md)** - Proxy mail server configuration
+7. **[Caddy Web Server Setup](docs/caddy.md)** - Reverse proxy for web access
 
 Each document contains detailed instructions for its specific component and will guide you to the next step.
-
-## Components Reference
-
-- [Network Configuration](docs/network.md) - Network architecture overview
-- [Firewall Configuration](docs/firewall.md) - UFW setup and port forwarding
-- [WireGuard VPN Configuration](docs/wireguard.md) - Secure tunnel configuration
-- [Mailcow Configuration](docs/mailcow.md) - Internal mail server details
-- [DNS Configuration](docs/dns.md) - Email delivery DNS setup
-- [Haraka Mail Server Setup](docs/haraka.md) - Proxy mail server details
-- [Caddy Web Server Setup](docs/caddy.md) - Reverse proxy configuration
 
 ## Security Features
 
