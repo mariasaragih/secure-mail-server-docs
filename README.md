@@ -63,7 +63,7 @@ By self-hosting the SMTP relay through a VPS, we maintain greater control over o
 
 ## License
 
-This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Creative Commons Zero v1.0 Universal (CC0) License - see the [LICENSE](LICENSE) file for details.
 
 ## Contributing
 
