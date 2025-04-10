@@ -1,5 +1,17 @@
 # Secure Email Server Architecture
 
+## The Journey of Self-Hosting Email
+
+When I first embarked on the journey of self-hosting my email server, I encountered a common narrative in the tech community: "Don't do it." Friends and YouTube experts alike warned me about two major challenges:
+
+1. **Complexity**: Setting up a private email server is notoriously complex, they said. And they weren't entirely wrong. The process is indeed complex, but perhaps not for the reasons we think. The complexity isn't inherent to the technology itself, but rather stems from a lack of modern, user-friendly tools and documentation. It's almost as if the tech industry has collectively decided that self-hosting email is a lost cause, leading to a self-fulfilling prophecy where the tools and guides remain outdated and complicated.
+
+2. **Deliverability**: "Your emails will never reach inboxes," they cautioned. "Major providers like Gmail and Outlook maintain strict whitelists and blacklists, automatically flagging emails from residential IPs as spam." This, however, turned out to be a myth. Through careful architecture and proper configuration, it's not only possible but achievable to reach 100% deliverability rates - sometimes even better than commercial solutions. The key lies in understanding the email ecosystem and implementing the right infrastructure.
+
+This project represents my journey in debunking these myths and creating a practical solution. It's not just about setting up another email server; it's about demonstrating that self-hosted email can be both reliable and deliverable. The architecture documented here achieves this without relying on external email relay services, proving that complete email independence is possible.
+
+While the current state of self-hosted email might seem daunting, this guide aims to change that narrative. By providing clear, step-by-step instructions and explaining the underlying principles, we can make self-hosted email more accessible to everyone. This is not just a technical implementation; it's a step toward email independence and privacy.
+
 This repository contains documentation for a secure email server architecture implementation. The system consists of a client-server setup with secure communication through WireGuard VPN.
 
 ## Architecture Overview
