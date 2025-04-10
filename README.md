@@ -1,4 +1,4 @@
-# Secure Email Server Architecture
+# Private and Secure Email Server Architecture
 
 ## The Journey of Self-Hosting Email
 
