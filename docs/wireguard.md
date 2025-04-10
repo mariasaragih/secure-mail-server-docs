@@ -78,6 +78,136 @@ wg setconf wg0 /etc/wireguard/wg0.conf
 ip link set up dev wg0
 ```
 
+## Making WireGuard Persistent
+
+To ensure WireGuard starts automatically on boot and persists across system reboots, we'll create a systemd service for both the proxy server and client server.
+
+### 1. Create the WireGuard Setup Script
+
+#### For the Proxy Server
+
+Create a new file `/etc/init.d/wireguard-setup` on the proxy server:
+
+```bash
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          wireguard-setup
+# Required-Start:    $network $remote_fs $syslog
+# Required-Stop:     $network $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Setup WireGuard interface
+# Description:       Setup WireGuard interface with IP address
+### END INIT INFO
+
+case "$1" in
+  start)
+    echo "Starting WireGuard..."
+    modprobe wireguard
+    ip link add dev wg0 type wireguard 2>/dev/null || true
+    wg setconf wg0 /etc/wireguard/wg0.conf
+    ip address add dev wg0 10.0.0.1/24 2>/dev/null || true
+    ip link set up dev wg0
+    ;;
+  stop)
+    echo "Stopping WireGuard..."
+    ip link del dev wg0 2>/dev/null || true
+    ;;
+  restart)
+    $0 stop
+    sleep 1
+    $0 start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+    ;;
+esac
+
+exit 0
+```
+
+#### For the Client Server
+
+Create a new file `/etc/init.d/wireguard-setup` on the client server:
+
+```bash
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          wireguard-setup
+# Required-Start:    $network $remote_fs $syslog
+# Required-Stop:     $network $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Setup WireGuard interface
+# Description:       Setup WireGuard interface with IP address
+### END INIT INFO
+
+case "$1" in
+  start)
+    echo "Starting WireGuard..."
+    modprobe wireguard
+    ip link add dev wg0 type wireguard 2>/dev/null || true
+    wg setconf wg0 /etc/wireguard/wg0.conf
+    ip address add dev wg0 10.0.0.2 peer 10.0.0.1 2>/dev/null || true
+    ip link set up dev wg0
+    ;;
+  stop)
+    echo "Stopping WireGuard..."
+    ip link del dev wg0 2>/dev/null || true
+    ;;
+  restart)
+    $0 stop
+    sleep 1
+    $0 start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+    ;;
+esac
+
+exit 0
+```
+
+### 2. Create the Systemd Service
+
+Create a new file `/etc/systemd/system/wireguard.service` on both servers:
+
+```ini
+[Unit]
+Description=Setup WireGuard interface
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/etc/init.d/wireguard-setup start
+ExecStop=/etc/init.d/wireguard-setup stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+```
+
+### 3. Enable and Start the Service
+
+Run the following commands to enable and start the WireGuard service:
+
+```bash
+# Make the setup script executable
+sudo chmod +x /etc/init.d/wireguard-setup
+
+# Reload systemd configuration
+sudo systemctl daemon-reexec
+sudo systemctl daemon-reload
+
+# Enable and start the service
+sudo systemctl enable wireguard.service
+sudo systemctl start wireguard.service
+```
+
+Now WireGuard will automatically start on boot and maintain its configuration across system reboots.
+
 ## Firewall Considerations
 
 ### Proxy Server
