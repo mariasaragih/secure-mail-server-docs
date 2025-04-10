@@ -6,11 +6,11 @@ This document describes the setup and configuration of [Haraka](https://haraka.g
 
 ### Why Haraka?
 
-Simple port forwarding is insufficient for properly proxying email between a protected mail server and the internet. A dedicated Mail Transfer Agent (MTA) is required to handle the complexities of email routing while preserving crucial sender information.
+Simple port forwarding is insufficient for properly proxying email between a protected mail server and the internet. A dedicated Mail Transfer Agent (MTA) is required to handle the complexities of email routing while preserving essential sender information.
 
 While traditional MTAs like Postfix are powerful, Haraka was chosen for this setup for several key reasons:
 
-1. **XCLIENT Support**: Haraka has excellent support for the XCLIENT protocol extension, which is crucial for preserving the original sender's IP address and information when forwarding emails. This ensures that emails appear to come from their original sources, not from the proxy server.
+1. **XCLIENT Support**: Haraka has excellent support for the XCLIENT protocol extension, which is essential for preserving the original sender's IP address and information when forwarding emails. This ensures that emails appear to come from their original sources, not from the proxy server.
 
 2. **Minimal Resource Footprint**: Haraka's event-driven architecture means it performs exceptionally well on limited hardware. This setup runs efficiently on a minimalist VPS with just 1GB RAM, 1 CPU, and 10GB SSD storage.
 
@@ -86,7 +86,7 @@ Note: The `listen=[::]:25` setting configures Haraka to listen on port 25 for bo
 Each plugin in the configuration serves a specific role in the mail proxy architecture:
 
 #### xclient
-The [XCLIENT plugin](https://haraka.github.io/plugins/xclient) is crucial for preserving the original sender information. When an email arrives at the proxy server, this plugin ensures that the original sender's IP address and details are forwarded to the backend mail server (Mailcow). Without this plugin, all emails would appear to originate from the proxy server's IP address, causing problems with spam filtering and authentication.
+The [XCLIENT plugin](https://haraka.github.io/plugins/xclient) is essential for preserving the original sender information. When an email arrives at the proxy server, this plugin ensures that the original sender's IP address and details are forwarded to the backend mail server (Mailcow). Without this plugin, all emails would appear to originate from the proxy server's IP address, causing problems with spam filtering and authentication.
 
 #### queue/smtp_forward
 The [SMTP Forward plugin](https://haraka.github.io/plugins/queue/smtp_forward) handles the actual forwarding of emails to the backend mail server. It doesn't store messages locally but immediately forwards them to the specified destination (Mailcow). The queue prefix indicates that it operates at the queuing phase of mail processing.
