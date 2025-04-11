@@ -219,13 +219,9 @@ DNS changes can take time to propagate worldwide. You can verify propagation sta
 2. **What's My DNS**:
    - Visit https://whatsmydns.net/
    - Enter your domain and select the record type
-   - View a global map showing propagation status
+   - View a global map showing propagation status and how your DNS records appear from different locations worldwide
 
-3. **Global DNS Propagation Checker**:
-   - Visit https://www.whatsmydns.net/
-   - Check how your DNS records appear from different locations worldwide
-
-4. **Propagation Times**:
+3. **Propagation Times**:
    - TTL (Time to Live) settings affect propagation speed
    - Standard propagation can take 24-48 hours
    - Some changes may propagate faster (4-8 hours)
